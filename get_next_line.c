@@ -3,21 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtravanc <jtravanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtravanca <jtravanca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 16:15:05 by jtravanc          #+#    #+#             */
-/*   Updated: 2026/05/21 17:32:18 by jtravanc         ###   ########.fr       */
+/*   Updated: 2026/05/21 19:06:13 by jtravanca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+static char ft_get_current_line ()
+
 char *get_next_line(int fd)
 {
-	static char *line;
-	char buffer;
-	line = malloc (ft_strlen_mod(line) * sizeof(char));
-	read (fd, line, sizeof(buffer));
+	static char *full_str;
+	char *line;
+	int buffer;
+	ssize_t bytes;
+
+	bytes = read(fd, full_str, BUFFER_SIZE);
+	full_str = malloc ((BUFFER_SIZE + 1) * sizeof (char ));
+	
 	return (line);
 }
 
