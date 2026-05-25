@@ -6,7 +6,7 @@
 /*   By: jtravanca <jtravanca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 16:15:05 by jtravanc          #+#    #+#             */
-/*   Updated: 2026/05/23 12:51:21 by jtravanca        ###   ########.fr       */
+/*   Updated: 2026/05/25 19:56:51 by jtravanca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,52 @@ static char *ft_get_current_line (char *line)
 	return (line);
 }
 
+char *get_string (char *s, int choice)
+{
+	char *new1;
+	char *new2;
+	int		i;
+	
+	i = 0;
+	while (s[i] !=)
+	while ()
+}
+
 char *get_next_line(int fd)
 {
-	static char *estatic;
+	static char *next;
 	char buf[BUFFER_SIZE + 1];
 	char *temp;
-	int	bytes;
+	ssize_t	bytes;
 	char *old;
-
-	temp = ft_strdup (""); // why
-	while ( !(ft_strchr(temp, '\n'))) // depois fazer um strjoin para line que vai acumular
+	char *line;
+	if (next)
+	{
+		temp = ft_strdup(next);
+		if (ft_strchr(next, '\n'))
+		{
+			free (next);
+			old = temp;
+			next = ft_strim_mod(old);
+			return temp;
+		}	
+	}
+	else
+		temp = ft_strdup("");
+	while ( !(ft_strchr(temp, '\n')))
 	{
 		bytes = read (fd, buf, BUFFER_SIZE);
 		if (bytes <= 0)
 			break;
 		buf[bytes] = '\0';
-		old = temp; // why
+		old = temp;
 		temp = ft_strjoin(temp, buf)
 		free (old);		
 	}
-	
+	if (next)
+	(
+		line = ft_strjoin (next, temp);	
+	)
 	return (line);
 }
 

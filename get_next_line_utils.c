@@ -6,7 +6,7 @@
 /*   By: jtravanca <jtravanca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 16:53:12 by jtravanc          #+#    #+#             */
-/*   Updated: 2026/05/23 16:52:48 by jtravanca        ###   ########.fr       */
+/*   Updated: 2026/05/25 18:41:35 by jtravanca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ size_t ft_strlen (const char *s)
 		i++;		
 	return (i);
 }
+
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -71,6 +72,31 @@ char *ft_strjoin (const char *s1, const char *s2)
 		*new++ = *s2++;
 	*new = '\0';
 	return (ptr);
+}
+
+char *ft_strim_mod (char *s)
+{
+	int start;
+	char *new;
+	int		i;
+
+	i = 0;
+	start = 0;
+	while (s[start] && s[start] != '\n')
+		start++;
+	if (s[start] == '\n')
+		start++;
+	new = malloc ((ft_strlen (s) - start + 1) * sizeof(char));
+	if (!new)
+    	return (NULL);
+	while (s[start] != '\0')
+	{
+		new[i] = s[start]; 
+		start++;
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
 }
 
 
