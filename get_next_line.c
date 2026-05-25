@@ -6,7 +6,7 @@
 /*   By: jtravanca <jtravanca@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 16:15:05 by jtravanc          #+#    #+#             */
-/*   Updated: 2026/05/25 19:56:51 by jtravanca        ###   ########.fr       */
+/*   Updated: 2026/05/25 20:26:13 by jtravanca        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,18 @@ static char *ft_get_current_line (char *line)
 	return (line);
 }
 
-char *get_string (char *s, int choice)
+char *ft_get_line (char *temp) // funcao para copiar de temp a \n
 {
-	char *new1;
-	char *new2;
+	char *new;
 	int		i;
 	
 	i = 0;
-	while (s[i] !=)
-	while ()
+	while (temp[i] != 0 && temp[i] != '\n')
+		i++;
+	if (temp[i] == '\n')
+		str[i + 1] == '\0';
+	return (str);
+
 }
 
 char *get_next_line(int fd)
@@ -50,7 +53,7 @@ char *get_next_line(int fd)
 			free (next);
 			old = temp;
 			next = ft_strim_mod(old);
-			return temp;
+			return (temp);
 		}	
 	}
 	else
@@ -62,13 +65,14 @@ char *get_next_line(int fd)
 			break;
 		buf[bytes] = '\0';
 		old = temp;
-		temp = ft_strjoin(temp, buf)
+		temp = ft_strjoin(temp, buf);
 		free (old);		
 	}
-	if (next)
-	(
-		line = ft_strjoin (next, temp);	
-	)
+	if (*temp == '\0')
+		return (NULL);
+	line = temp;
+	if (ft_strchr(temp, '\n'))
+		next = ft_strim_mod(temp);
 	return (line);
 }
 
