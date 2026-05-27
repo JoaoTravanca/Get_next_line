@@ -3,82 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtravanca <jtravanca@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jtravanc <jtravanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 16:15:05 by jtravanc          #+#    #+#             */
-/*   Updated: 2026/05/25 20:26:13 by jtravanca        ###   ########.fr       */
+/*   Updated: 2026/05/27 16:07:36 by jtravanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char *ft_get_current_line (char *line)
-{
-	int	i;
-	i = 0;
-	while (line[i] != '\0' || line[i] != '\n')
-		i++;
-	line = malloc ((i + 1) * sizeof(char));
-	
-	return (line);
-}
-
-char *ft_get_line (char *temp) // funcao para copiar de temp a \n
-{
-	char *new;
-	int		i;
-	
-	i = 0;
-	while (temp[i] != 0 && temp[i] != '\n')
-		i++;
-	if (temp[i] == '\n')
-		str[i + 1] == '\0';
-	return (str);
-
-}
-
 char *get_next_line(int fd)
 {
-	static char *next;
-	char buf[BUFFER_SIZE + 1];
-	char *temp;
-	ssize_t	bytes;
-	char *old;
-	char *line;
-	if (next)
-	{
-		temp = ft_strdup(next);
-		if (ft_strchr(next, '\n'))
-		{
-			free (next);
-			old = temp;
-			next = ft_strim_mod(old);
-			return (temp);
-		}	
-	}
-	else
-		temp = ft_strdup("");
-	while ( !(ft_strchr(temp, '\n')))
+	static char	*next;
+	char		buf[BUFFER_SIZE + 1];
+	char		*temp;
+	char		*line;
+	ssize_t		bytes;
+
+    if (!next)
+        next = ft_strjoin("", "");
+	while ( !(ft_strchr(next, '\n')))
 	{
 		bytes = read (fd, buf, BUFFER_SIZE);
 		if (bytes <= 0)
 			break;
 		buf[bytes] = '\0';
-		old = temp;
-		temp = ft_strjoin(temp, buf);
-		free (old);		
+		temp = ft_strjoin(next, buf);
+		free (next);
+		next = temp;		
 	}
-	if (*temp == '\0')
-		return (NULL);
-	line = temp;
-	if (ft_strchr(temp, '\n'))
-		next = ft_strim_mod(temp);
-	return (line);
+	if (!*next)
+        return (NULL);
+    line = ft_linetrim(next);
+    temp = ft_strim_mod(next);
+    free(next);
+    next = temp;
+    return (line);
 }
 
-int main (void)
+int	main(void)
 {
+	int		fd;
+	char	*line;
+	int		line_count;
 
-	
+	fd = open("teste.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Erro ao abrir o ficheiro");
+		return (1);
+	}
+	line_count = 1;
+	printf("--- A INICIAR A LEITURA ---\n");
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("Linha %d: %s", line_count, line);
+		free(line);
+		line_count++;
+	}
+	printf("--- FIM DO FICHEIRO ---\n");
+	close(fd);
 	return (0);
 }
